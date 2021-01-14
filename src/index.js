@@ -1,46 +1,37 @@
 document.addEventListener("DOMContentLoaded", () => {
   // your code here
   console.log('DOM has been loaded!')
-});
 
+  // select element to listen for event on
+  const taskForm = document.querySelector('#create-task-form')
+  const taskUl = document.querySelector('#tasks')
 
-// select element to listen for event on
-const taskForm = document.querySelector('#create-task-form')
-const taskUl = document.createElement('ul')
-const taskLi = document.createElement('li')
-  
-// create html elements to display and structure user input:
-  // <ul>
+  // create html elements to display and structure user input:
+  // <ul id="tasks">
   //    <li>user input</li>
   // </ul>
 
-function renderNewTask(taskInput) {
+  function renderNewTask(input) {
+    const taskLi = document.createElement('li')
+    taskLi.classList.add('task-list-item')
+    taskLi.innerText = input
+    taskUl.append(taskLi)
+  }
 
-  taskUl.classList.add('task-list')
-  taskLi.classList.add('task-list-item')
-  taskUl.append(taskLi)
-  taskLi.innerText = taskInput
+  // tell event listener what we want to happen on event --> when submitted, user input should be displayed on page
 
-  taskForm.append(taskUl)
-}
+  taskForm.addEventListener('submit', function(event) {
+    event.preventDefault()
 
+    const taskInputField = document.querySelector('#new-task-description')
+    const taskInput = taskInputField.value
 
+    renderNewTask(taskInput)
+    event.target.reset()
+  })  
 
-// tell event listener what we want to happen on event --> when submitted, user input should be displayed on page
+});
 
-taskForm.addEventListener('submit', function(event) {
-  // make sure to prevent default action --> event.preventDefault
-  event.preventDefault
-
-  // access user input from form
-  const taskInput = event.target.newTaskDescription.value
-
-  // render new task function below:
-  renderNewTask(taskInput)
-
-  // clears input field
-  event.target.reset 
-})
 
 
 
